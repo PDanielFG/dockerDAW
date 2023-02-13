@@ -6,6 +6,8 @@ services:
       - 'mongo_data:/data/db'
     ports:
       - '27017:27017'
+    networks:
+      - dockerdaw_netowrk
     
   mongo-express:
     image: mongo-express
@@ -14,6 +16,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    networks:
+      - dockerdaw_netowrk
     depends_on:
       - mongodb
 #El servicio mongo-express no se iniciará hasta que mongodb este iniciado
@@ -23,7 +27,7 @@ volumes:
     driver: local
 
 networks:
-  default:
+  dockerdaw_netowrk:
     driver: bridge
 
 
