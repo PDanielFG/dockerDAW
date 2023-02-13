@@ -15,11 +15,11 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
     depends_on:
-      - 'mongodb'
+      - mongodb
 #El servicio mongo-express no se iniciará hasta que mongodb este iniciado
 
 volumes:
-  mongo_data
+  mongo_data:
 
 networks:
   default:
