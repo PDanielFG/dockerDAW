@@ -5,7 +5,7 @@ services:
     volumes: 
       - 'mongo_data:/data/db'
     ports:
-      - '27017:27017'
+      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -16,7 +16,7 @@ services:
   mongo-express:
     image: mongo-express
     ports:
-      - '8081:8081'
+      - 8081:8081
     environment:
       ME_CONFIG_mongo_ADMINUSERNAME: admin
       ME_CONFIG_mongo_ADMINPASSWORD: password
@@ -26,11 +26,9 @@ services:
     depends_on:
       - mongo
 #El servicio mongo-express no se iniciará hasta que mongo este iniciado
-
 volumes:
   mongo_data:
     driver: local
-
 networks:
   dockerdaw_netowrk:
     driver: bridge
