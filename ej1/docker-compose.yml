@@ -1,37 +1,39 @@
-version: '2'
-services:
-  mongodb:
-    image: mongo
-    volumes: 
-      - 'mongo_data:/data/db'
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password
+version: '3.1'
 
+services:
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: toor
+    volumes:
+      - 'mi-mongo-vol:/app/data/bd'
     networks:
-      - dockerdaw_netowrk
-    
+      mi-mongo-red:
+        ipv4_address: 172.30.0.4
   mongo-express:
     image: mongo-express
     ports:
-      - "8081:8081"
-    environment:
-      ME_CONFIG_mongo_ADMINUSERNAME: admin
-      ME_CONFIG_mongo_ADMINPASSWORD: password
-      ME_CONFIG_MONGODB_SERVER: mongodb
-    networks:
-      - dockerdaw_netowrk
+      - '8081:8081'
     depends_on:
-      - mongodb
-#El servicio mongo-express no se iniciará hasta que mongo este iniciado
+      - mongo
+    networks:
+      mi-mongo-red:
+        ipv4_address: 172.30.0.5
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: toor
+      ME_CONFIG_MONGODB_URL: mongodb://root:toor@mongo:27017/
+
 volumes:
-  mongo_data:
+  mi-mongo-vol:
+    driver: local
+  mi-mongo-express-vol:
     driver: local
 networks:
-  dockerdaw_netowrk:
-    driver: bridge
-
-
-
+    mi-mongo-red:
+      driver: bridge
+      ipam:
+        config:
+          - subnet: 172.30.0.0/16
