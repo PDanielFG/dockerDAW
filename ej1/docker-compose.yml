@@ -10,7 +10,7 @@ services:
     volumes:
       - mongo-data:/data/db
     networks:
-      - mongo-net:
+      mongo-net:
         ipv4_address: 172.31.21.227
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -24,7 +24,7 @@ services:
     volumes:
       - mongo-express-data:/home/mongo-express/config
     networks:
-      - mongo-net:
+      mongo-net:
         ipv4_address: 172.31.21.228
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
