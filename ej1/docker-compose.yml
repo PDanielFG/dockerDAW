@@ -20,6 +20,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_URL: mongodb://admin:password:27017/
     networks:
       - dockerdaw_netowrk
     depends_on:
