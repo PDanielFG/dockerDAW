@@ -27,5 +27,7 @@ volumes:
   mongo_data:
     driver: local
 
-
+networks:
+  mongoNetWork:
+    driver: bridge
 
