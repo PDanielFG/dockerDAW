@@ -1,29 +1,44 @@
 version: '2'
 services:
   db:
-    image: mysql:5.7
+    image: mysql:latest
     volumes:
-      - db_data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
+    networks:
+      mysql-net:
+        ipv4_address: 10.15.0.5
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: mydatabase
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
     ports:
-      - "3306:3306"
+      - 3306:3306
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    volumes:
+      - phpmyadmin-data:/etc/phpmyadmin
+    networks:
+      mysql-net:
+        ipv4_address: 10.15.0.6
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     ports:
-      - "8080:80"
+      - 8080:80
     depends_on:
       - db
-volumes:
-  db_data:
 
-networks:
-  mynetwork:
+volumes:
+  mysql-data:
+    driver: local
+  phpmyadmin-data:
+    driver: local 
+
+networks:  
+  mysql-net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.15.0.0/16

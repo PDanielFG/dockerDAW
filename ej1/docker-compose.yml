@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   mongo:
-    image: mongo
+    image: mongo:latest
     restart: always
     ports:
       - 27017:27017
@@ -22,7 +22,7 @@ services:
     ports:
       - 8081:8081
     volumes:
-      - mongo-express-data:/home/mongo-express/config
+      - mongo-express-data:/home/mongo-express
     networks:
       mongo-net:
         ipv4_address: 172.31.21.228
