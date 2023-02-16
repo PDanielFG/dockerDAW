@@ -29,16 +29,15 @@ services:
       - 8080:80
     depends_on:
       - db
-
 volumes:
   mysql-data:
     driver: local
   phpmyadmin-data:
     driver: local 
-
 networks:  
   mysql-net:
     driver: bridge
     ipam:
       config:
         - subnet: 10.15.0.0/16
+        

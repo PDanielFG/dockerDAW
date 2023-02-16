@@ -1,21 +1,18 @@
 version: '3.1'
-
 services:
-
-  mongo:
-    image: mongo:latest
+  mongo:    #Creamos dos contenedores, uno llamado "mongo" y otro llamado "mongo-express"
+    image: mongo:latest  #imagen que usará el contenedor mongo
     restart: always
     ports:
-      - 27017:27017
-    volumes:
-      - mongo-data:/data/db
+      - 27017:27017   #mapeamos los puertos 
+    volumes:  
+      - mongo-data:/data/db   #Creamos un volumen para que los datos persistan en caso de que queramos crear otro contenedor con la misma bd
     networks:
       mongo-net:
-        ipv4_address: 172.31.21.227
+        ipv4_address: 172.31.21.227   #Asignamos una ip de la network mongo-net definida mas abajo
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_USERNAME: root      #variables de entorno, que serán el nombre de usuario y contraseña del admin
       MONGO_INITDB_ROOT_PASSWORD: example
-
   mongo-express:
     image: mongo-express
     restart: always
@@ -29,15 +26,13 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-
-volumes:
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/  #indica la conexión a la bd
+volumes:    #definimos los volumenes usados, indicando el driver local que usaremos
   mongo-data:
     driver: local
   mongo-express-data:
     driver: local 
-
-networks:
+networks: #definimos la red que usaremos para que los contenedores se comuniquen
   mongo-net:
     driver: bridge
     ipam:
